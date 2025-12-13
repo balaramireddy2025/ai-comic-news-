@@ -6,11 +6,10 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const category = (searchParams.get('category') as NewsCategory) || 'general';
+    // Only fetch AI news - ignore category parameter
     const apiKey = process.env.NEWS_API_KEY;
 
-    const newsData = await fetchNews(category, apiKey);
+    const newsData = await fetchNews('technology', apiKey);
 
     return NextResponse.json(newsData, {
       headers: {

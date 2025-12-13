@@ -9,24 +9,13 @@ export default function Home() {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState<NewsCategory>('general');
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
 
-  const categories: NewsCategory[] = [
-    'general',
-    'technology',
-    'business',
-    'entertainment',
-    'sports',
-    'science',
-    'health',
-  ];
-
-  const fetchNews = async (selectedCategory: NewsCategory = category) => {
+  const fetchNews = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`/api/news?category=${selectedCategory}`);
+      const response = await fetch('/api/news');
       if (!response.ok) {
         throw new Error('Failed to fetch news');
       }
@@ -46,11 +35,6 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCategoryChange = (newCategory: NewsCategory) => {
-    setCategory(newCategory);
-    fetchNews(newCategory);
-  };
-
   const handleRefresh = () => {
     fetchNews();
   };
@@ -62,11 +46,14 @@ export default function Home() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-center md:text-left">
-              <h1 className="font-comic text-4xl md:text-5xl text-black mb-2">
-                COMIC STYLE AI NEWS
+              <h1 className="font-comic text-4xl md:text-6xl text-black mb-2 transform hover:scale-105 transition-transform">
+                🤖 AI COMIC NEWS
               </h1>
-              <p className="font-comicBody text-lg text-gray-700">
-                Your Daily News in Comic Book Style!
+              <p className="font-comicBody text-xl text-gray-800 font-bold">
+                The ONLY Comic-Style AI News Source for Tech Enthusiasts!
+              </p>
+              <p className="font-comicBody text-sm text-gray-600 mt-1">
+                100% AI News • 100% Comic Style • 100% Unique
               </p>
             </div>
             <SpeechBubble className="bg-comic-yellow">
@@ -80,61 +67,42 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Category Filter */}
+      {/* AI News Only Badge & Refresh */}
       <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-wrap gap-2 justify-center mb-6">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => handleCategoryChange(cat)}
-              className={`
-                px-4
-                py-2
-                border-2
-                border-black
-                rounded-lg
-                font-comicBody
-                font-bold
-                transition-all
-                shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
-                hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
-                transform
-                hover:translate-x-0.5
-                hover:translate-y-0.5
-                ${
-                  category === cat
-                    ? 'bg-comic-yellow text-black'
-                    : 'bg-white text-black hover:bg-comic-blue hover:text-white'
-                }
-              `}
-            >
-              {cat.toUpperCase()}
-            </button>
-          ))}
+        <div className="flex flex-wrap gap-4 justify-center items-center mb-6">
+          <div className="bg-comic-blue border-4 border-black px-6 py-3 rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform hover:scale-105 transition-transform">
+            <p className="font-comic text-2xl text-white">
+              ⚡ AI NEWS ONLY ⚡
+            </p>
+            <p className="font-comicBody text-sm text-white mt-1">
+              No Sports • No Politics • Just AI!
+            </p>
+          </div>
           <button
             onClick={handleRefresh}
             disabled={loading}
             className={`
-              px-4
-              py-2
-              border-2
+              px-6
+              py-3
+              border-4
               border-black
               rounded-lg
-              font-comicBody
+              font-comic
               font-bold
+              text-xl
               bg-comic-green
               text-black
               transition-all
-              shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
-              hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
+              shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+              hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
               transform
-              hover:translate-x-0.5
-              hover:translate-y-0.5
+              hover:translate-x-1
+              hover:translate-y-1
               disabled:opacity-50
               disabled:cursor-not-allowed
             `}
           >
-            {loading ? 'LOADING...' : '🔄 REFRESH'}
+            {loading ? '⚡ LOADING...' : '🔄 REFRESH AI NEWS'}
           </button>
         </div>
       </div>
@@ -184,9 +152,12 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="mt-12 container mx-auto px-4 text-center">
-        <div className="bg-white border-4 border-black rounded-lg p-4 inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-          <p className="font-comicBody text-sm text-gray-700">
-            Powered by NewsAPI.org | Updates every morning
+        <div className="bg-comic-yellow border-4 border-black rounded-lg p-6 inline-block shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+          <p className="font-comic text-xl text-black mb-2">
+            🤖 THE AI NEWS SOURCE FOR TECH PEOPLE 🤖
+          </p>
+          <p className="font-comicBody text-sm text-gray-800">
+            Powered by NewsAPI.org | Fresh AI News Every Morning | Comic Style Only
           </p>
         </div>
       </footer>

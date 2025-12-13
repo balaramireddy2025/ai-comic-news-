@@ -24,18 +24,25 @@ export default function NewsPanel({ article, index }: NewsPanelProps) {
         border-black
         rounded-lg
         overflow-hidden
-        shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
+        shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
         transform
         transition-all
         duration-300
-        hover:scale-105
-        hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+        hover:scale-110
+        hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]
+        hover:-rotate-1
         animate-fadeIn
+        comic-panel-hover
       `}
       style={{
         animationDelay: `${index * 0.1}s`,
       }}
     >
+      {/* AI Badge */}
+      <div className="absolute top-2 left-2 z-10 bg-comic-red border-3 border-black px-3 py-1 rounded-full shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+        <span className="font-comic text-sm text-white">🤖 AI</span>
+      </div>
+
       {/* Comic Panel Number Badge */}
       <div
         className={`
@@ -43,18 +50,22 @@ export default function NewsPanel({ article, index }: NewsPanelProps) {
           top-2
           right-2
           z-10
-          border-2
+          border-3
           border-black
           rounded-full
-          w-10
-          h-10
+          w-12
+          h-12
           flex
           items-center
           justify-center
+          font-comic
           font-bold
           text-black
-          text-lg
-          shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+          text-xl
+          shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
+          transform
+          hover:scale-110
+          transition-transform
           ${
             comicColor === 'comic-yellow' ? 'bg-comic-yellow' :
             comicColor === 'comic-red' ? 'bg-comic-red' :
@@ -68,9 +79,9 @@ export default function NewsPanel({ article, index }: NewsPanelProps) {
         {index + 1}
       </div>
 
-      {/* Image Section */}
+      {/* Image Section with Comic Style */}
       {hasImage && (
-        <div className="relative w-full h-48 bg-gray-200">
+        <div className="relative w-full h-56 bg-gray-200 border-b-4 border-black">
           <Image
             src={article.urlToImage!}
             alt={article.title}
@@ -78,8 +89,12 @@ export default function NewsPanel({ article, index }: NewsPanelProps) {
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          {/* Comic style overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          {/* Comic style overlay with halftone effect */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle, transparent 1px, rgba(0,0,0,0.1) 1px)',
+            backgroundSize: '8px 8px'
+          }} />
         </div>
       )}
 

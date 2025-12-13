@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Comic Style AI News",
-  description: "Get your daily news in a vibrant comic book style! Fresh updates every morning.",
-  keywords: ["news", "comic", "AI", "daily news", "comic book style"],
+  title: "AI Comic News - The ONLY Comic-Style AI News Source",
+  description: "100% AI News in 100% Comic Style! The unique news source for AI tech enthusiasts. No sports, no politics - just AI news in beautiful comic book format.",
+  keywords: ["AI news", "artificial intelligence", "comic style news", "AI technology", "machine learning", "comic book style", "tech news", "AI updates"],
 };
 
 export default function RootLayout({
