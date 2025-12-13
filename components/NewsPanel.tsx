@@ -1,220 +1,101 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
-import { NewsArticle } from '@/types/news';
-import { formatDate, truncateText, getComicColor } from '@/lib/utils';
-import SpeechBubble from './SpeechBubble';
+import CartoonImageProcessor from './CartoonImageProcessor';
 
 interface NewsPanelProps {
-  article: NewsArticle;
-  index: number;
+  number: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  category: string;
+  timestamp: string;
+  source: string;
+  accentColor: string;
 }
 
-export default function NewsPanel({ article, index }: NewsPanelProps) {
-  const comicColor = getComicColor(index);
-  const hasImage = article.urlToImage;
-
+export default function NewsPanel({
+  number,
+  title,
+  description,
+  imageUrl,
+  category,
+  timestamp,
+  source,
+  accentColor,
+}: NewsPanelProps) {
   return (
     <div
-      className={`
-        relative
-        bg-white
-        border-4
-        border-black
-        rounded-lg
-        overflow-hidden
-        shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
-        transform
-        transition-all
-        duration-300
-        hover:scale-110
-        hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]
-        hover:-rotate-1
-        animate-fadeIn
-        comic-panel-hover
-      `}
-      style={{
-        animationDelay: `${index * 0.1}s`,
-      }}
+      className={`rounded-3xl border-4 border-black ${accentColor} overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex flex-col`}
     >
-      {/* AI Badge */}
-      <div className="absolute top-2 left-2 z-10 bg-comic-red border-3 border-black px-3 py-1 rounded-full shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-        <span className="font-comic text-sm text-white">🤖 AI</span>
-      </div>
-
-      {/* Comic Panel Number Badge */}
-      <div
-        className={`
-          absolute
-          top-2
-          right-2
-          z-10
-          border-3
-          border-black
-          rounded-full
-          w-12
-          h-12
-          flex
-          items-center
-          justify-center
-          font-comic
-          font-bold
-          text-black
-          text-xl
-          shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
-          transform
-          hover:scale-110
-          transition-transform
-          ${
-            comicColor === 'comic-yellow' ? 'bg-comic-yellow' :
-            comicColor === 'comic-red' ? 'bg-comic-red' :
-            comicColor === 'comic-blue' ? 'bg-comic-blue' :
-            comicColor === 'comic-green' ? 'bg-comic-green' :
-            comicColor === 'comic-orange' ? 'bg-comic-orange' :
-            'bg-comic-purple'
-          }
-        `}
-      >
-        {index + 1}
-      </div>
-
-      {/* Image Section with Comic Style */}
-      {hasImage && (
-        <div className="relative w-full h-56 bg-gray-200 border-b-4 border-black">
-          <Image
-            src={article.urlToImage!}
-            alt={article.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-          {/* Comic style overlay with halftone effect */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle, transparent 1px, rgba(0,0,0,0.1) 1px)',
-            backgroundSize: '8px 8px'
-          }} />
-        </div>
-      )}
-
-      {/* Content Section */}
-      <div className="p-4">
-        {/* Speech Bubble for Title */}
-        <SpeechBubble
-          className={`
-            mb-3
-            min-h-[80px]
-            ${
-              comicColor === 'comic-yellow' ? 'bg-comic-yellow' :
-              comicColor === 'comic-red' ? 'bg-comic-red' :
-              comicColor === 'comic-blue' ? 'bg-comic-blue' :
-              comicColor === 'comic-green' ? 'bg-comic-green' :
-              comicColor === 'comic-orange' ? 'bg-comic-orange' :
-              'bg-comic-purple'
-            }
-          `}
-          tailPosition={index % 2 === 0 ? 'left' : 'right'}
+      {/* Badge */}
+      <div className="relative">
+        <div
+          className={`absolute top-3 right-3 w-12 h-12 ${accentColor} rounded-full border-4 border-black flex items-center justify-center font-black text-xl shadow-lg z-10`}
         >
-          <h3
-            className={`
-              font-comic
-              text-lg
-              font-bold
-              text-black
-              leading-tight
-            `}
-          >
-            {truncateText(article.title, 100)}
-          </h3>
-        </SpeechBubble>
+          {number}
+        </div>
 
-        {/* Description */}
-        {article.description && (
-          <p
-            className={`
-              font-comicBody
-              text-sm
-              text-gray-800
-              mb-3
-              leading-relaxed
-            `}
-          >
-            {truncateText(article.description, 150)}
-          </p>
-        )}
+        {/* Comic Panel Image with Cartoon Effect */}
+        <div className="w-full h-64 bg-gray-200 overflow-hidden relative">
+          {imageUrl ? (
+            <CartoonImageProcessor
+              originalUrl={imageUrl}
+              alt={title}
+              width={400}
+              height={300}
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
+              <span className="text-gray-600 font-bold">No Image</span>
+            </div>
+          )}
+        </div>
+      </div>
 
-        {/* Footer Info */}
-        <div className="flex items-center justify-between mt-4 pt-3 border-t-2 border-black border-dashed">
-          <div className="flex items-center gap-2">
-            <span
-              className={`
-                border-2
-                border-black
-                px-2
-                py-1
-                rounded
-                font-comicBody
-                text-xs
-                font-bold
-                text-black
-                ${
-                  comicColor === 'comic-yellow' ? 'bg-comic-yellow' :
-                  comicColor === 'comic-red' ? 'bg-comic-red' :
-                  comicColor === 'comic-blue' ? 'bg-comic-blue' :
-                  comicColor === 'comic-green' ? 'bg-comic-green' :
-                  comicColor === 'comic-orange' ? 'bg-comic-orange' :
-                  'bg-comic-purple'
-                }
-              `}
-            >
-              {article.source.name}
-            </span>
-          </div>
-          <span className="font-comicBody text-xs text-gray-600 font-bold">
-            {formatDate(article.publishedAt)}
+      {/* Content */}
+      <div className="p-5 flex-1 flex flex-col">
+        {/* Category Badge */}
+        <div className="flex gap-2 mb-3">
+          <span
+            className={`px-3 py-1 rounded-full border-2 border-black font-black text-xs ${accentColor} uppercase`}
+          >
+            {category}
           </span>
         </div>
 
+        {/* Comic Speech Bubble Title */}
+        <div className="bg-white border-4 border-black rounded-2xl p-4 mb-3 relative">
+          <div className="absolute -bottom-2 left-6 w-4 h-4 bg-white border-4 border-black border-t-0 border-l-0 rounded-full"></div>
+          <h3 className="font-black text-sm md:text-base leading-tight uppercase text-black">
+            {title.toUpperCase()}
+          </h3>
+        </div>
+
+        {/* Description */}
+        <p className="text-xs md:text-sm leading-relaxed text-gray-800 mb-3 flex-1">
+          {description.length > 150
+            ? `${description.substring(0, 150)}...`
+            : description}
+        </p>
+
+        {/* Divider */}
+        <div className="border-t-2 border-dashed border-black my-2"></div>
+
+        {/* Metadata */}
+        <div className="flex justify-between items-center text-xs font-bold mb-3">
+          <span className="bg-yellow-300 px-2 py-1 border-2 border-black rounded">
+            {source}
+          </span>
+          <span className="text-gray-700">{timestamp}</span>
+        </div>
+
         {/* Read More Button */}
-        <a
-          href={article.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`
-            block
-            mt-3
-            w-full
-            border-2
-            border-black
-            text-black
-            font-comic
-            font-bold
-            py-2
-            px-4
-            rounded
-            text-center
-            hover:opacity-80
-            transition-opacity
-            shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
-            hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
-            transform
-            hover:translate-x-0.5
-            hover:translate-y-0.5
-            ${
-              comicColor === 'comic-yellow' ? 'bg-comic-yellow' :
-              comicColor === 'comic-red' ? 'bg-comic-red' :
-              comicColor === 'comic-blue' ? 'bg-comic-blue' :
-              comicColor === 'comic-green' ? 'bg-comic-green' :
-              comicColor === 'comic-orange' ? 'bg-comic-orange' :
-              'bg-comic-purple'
-            }
-          `}
+        <button
+          className={`w-full ${accentColor} border-4 border-black rounded-xl py-2 font-black text-black uppercase hover:shadow-lg transition-all transform hover:scale-105 active:scale-95`}
         >
           READ MORE →
-        </a>
+        </button>
       </div>
     </div>
   );
 }
-
