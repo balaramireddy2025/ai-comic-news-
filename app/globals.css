@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-comic-headline: 'Bangers', cursive;
+  --font-comic-body: 'Comic Neue', cursive;
+}
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-comic-yellow via-comic-orange to-comic-red;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .font-comic {
+    font-family: var(--font-comic-headline);
+    letter-spacing: 0.05em;
+  }
+
+  .font-comicBody {
+    font-family: var(--font-comic-body);
+  }
+}
+
+/* Comic panel animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Comic style effects */
+.comic-panel {
+  position: relative;
+}
+
+.comic-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* Speech bubble tail positioning fix */
+.speech-bubble-left::before {
+  left: 1rem;
+  bottom: -15px;
+}
+
+.speech-bubble-right::before {
+  right: 1rem;
+  bottom: -15px;
+}
+
+/* Custom scrollbar for comic style */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border: 2px solid #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFD700;
+  border: 2px solid #000;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF8800;
+}
+
