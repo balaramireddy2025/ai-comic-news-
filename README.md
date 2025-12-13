@@ -62,14 +62,24 @@ The app will work with mock data if no API key is provided, perfect for developm
 
 ## Deployment
 
-### Deploy to Vercel
+### Quick Deploy via GitHub
 
-1. Push your code to GitHub
-2. Import your repository in [Vercel](https://vercel.com)
-3. Add your `NEWS_API_KEY` in the environment variables
-4. Deploy!
+**See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.**
 
-The app will automatically deploy and be available at your Vercel URL.
+1. **Push to GitHub:**
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/ai-comic-news.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+2. **Deploy to Vercel:**
+   - Go to [vercel.com](https://vercel.com) and sign in with GitHub
+   - Click "New Project" → Import your repository
+   - Add environment variable: `NEWS_API_KEY`
+   - Click "Deploy"
+
+Your site will be live automatically! Every push to GitHub triggers a new deployment.
 
 ### Daily Updates
 
