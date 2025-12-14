@@ -99,3 +99,9 @@ After fixing, your site should show:
 
 Your Next.js app should automatically build and deploy correctly now! 🎨
 
+
+
+
+
+
+

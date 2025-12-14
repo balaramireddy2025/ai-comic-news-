@@ -42,41 +42,53 @@ export default function Home() {
   return (
     <main className="min-h-screen pb-8">
       {/* Header */}
-      <header className="bg-white border-b-4 border-black shadow-[0_4px_0_0_rgba(0,0,0,1)]">
-        <div className="container mx-auto px-4 py-6">
+      <header className="relative bg-comic-yellow border-b-4 border-black shadow-[0_4px_0_0_rgba(0,0,0,1)] overflow-hidden">
+        <div className="absolute inset-0 bg-comic-dots opacity-20"></div>
+        <div className="container mx-auto px-4 py-6 relative">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-left">
-              <h1 className="font-comic text-4xl md:text-6xl text-black mb-2 transform hover:scale-105 transition-transform">
-                🤖 AI COMIC NEWS
+            <div className="text-center md:text-left relative">
+              <div className="absolute -top-4 -left-4 w-16 h-16 bg-comic-red rounded-full border-4 border-black"></div>
+              <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-comic-blue rounded-full border-4 border-black"></div>
+              <h1 className="font-comic text-4xl md:text-6xl text-black mb-2 transform hover:rotate-1 transition-transform relative z-10">
+                <span className="bg-white px-4 py-2 border-4 border-black rounded-lg shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+                  🤖 AI POLITICAL CARTOON NEWS
+                </span>
               </h1>
-              <p className="font-comicBody text-xl text-gray-800 font-bold">
-                The ONLY Comic-Style AI News Source for Tech Enthusiasts!
+              <p className="font-comicBody text-xl text-gray-800 font-bold bg-white px-3 py-1 border-2 border-black rounded-lg inline-block mt-2">
+                The Most Satirical Take on AI News!
               </p>
-              <p className="font-comicBody text-sm text-gray-600 mt-1">
-                100% AI News • 100% Comic Style • 100% Unique
-              </p>
+              <div className="absolute -bottom-6 right-0 w-24 h-3 bg-black"></div>
             </div>
-            <SpeechBubble className="bg-comic-yellow">
-              <p className="font-comicBody font-bold text-black">
-                {lastUpdate
-                  ? `Updated: ${lastUpdate.toLocaleTimeString()}`
-                  : 'Ready to load news!'}
-              </p>
-            </SpeechBubble>
+            <div className="relative">
+              <div className="absolute -top-2 -right-2 w-6 h-6 bg-comic-red rounded-full border-2 border-black"></div>
+              <SpeechBubble className="bg-white border-4 border-black">
+                <div className="absolute -top-3 right-4 w-6 h-6 bg-white border-t-4 border-l-4 border-r-0 border-b-0 border-black transform rotate-45"></div>
+                <p className="font-comicBody font-black text-black text-lg">
+                  {lastUpdate
+                    ? `📰 ${lastUpdate.toLocaleTimeString()} 📰`
+                    : '🎭 Ready for some satire! 🎭'}
+                </p>
+              </SpeechBubble>
+            </div>
           </div>
         </div>
       </header>
 
       {/* AI News Only Badge & Refresh */}
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-wrap gap-4 justify-center items-center mb-6">
-          <div className="bg-comic-blue border-4 border-black px-6 py-3 rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform hover:scale-105 transition-transform">
-            <p className="font-comic text-2xl text-white">
-              ⚡ AI NEWS ONLY ⚡
-            </p>
-            <p className="font-comicBody text-sm text-white mt-1">
-              No Sports • No Politics • Just AI!
-            </p>
+      <div className="container mx-auto px-4 py-8 relative">
+        <div className="absolute top-0 left-0 w-full h-2 bg-black"></div>
+        <div className="flex flex-wrap gap-6 justify-center items-center mb-8">
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-comic-red rounded-lg transform group-hover:rotate-1 transition-transform"></div>
+            <div className="bg-comic-blue border-4 border-black px-8 py-4 rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform group-hover:-translate-x-1 group-hover:-translate-y-1 transition-all relative z-10">
+              <p className="font-comic text-2xl md:text-3xl text-white text-center">
+                🎭 SATIRICAL AI NEWS 🎭
+              </p>
+              <p className="font-comicBody text-sm text-white mt-2 text-center">
+                Politics • Satire • AI • With a Twist!
+              </p>
+              <div className="absolute -bottom-3 -right-3 w-8 h-8 bg-comic-yellow rounded-full border-2 border-black"></div>
+            </div>
           </div>
           <button
             onClick={handleRefresh}
